@@ -5,9 +5,8 @@ const fs = require('fs');
 const destinationBuildFolder = "./build";
 
 const folderList = [
-    'final',
+    'sap',
     'output',
-    'raw_data',
     'templates',
     'monitoring'
 ]
