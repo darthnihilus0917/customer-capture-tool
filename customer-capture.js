@@ -6,9 +6,14 @@ const { processes, meats } = require('./lib/options/options');
 const { loadTitle } = require('./lib/utils/utils');
 const { appLabels } = require('./lib/contants/contants');
 
-const { consolidateRobinson, consolidateMetro, consolidatePuregold } = require('./lib/processes/consolidate');
+const { consolidateRobinson, consolidateMetro, 
+    consolidatePuregold } = require('./lib/processes/consolidate');
 
-const { generatePorkmeat, generatePoultry, generateSwine } = require("./lib/processes/generateDataSource");
+const { buildPorkmeat, buildPoultry, 
+    buildSwine } = require('./lib/processes/buildSOTC');
+
+const { generatePorkmeat, generatePoultry, 
+    generateSwine } = require("./lib/processes/generateDataSource");
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -74,9 +79,43 @@ async function main() {
                 console.log('\nYou selected:', action);
   
                 if (action === "CANCEL") {
-                    break; // break to go back to store selection
+                    break; // break to go back to meat selection
                 }
-  
+
+                if (action === "COPY SOTC DATA") {
+                    console.log(`Copying ${meat} SOTC & PICKUP data. Please wait...`);
+                    switch(meat) {
+                        case "PORK MEATS":
+                            await buildPorkmeat(meat, action);
+                            break;                    
+                        case "POULTRY":
+                            await buildPoultry(meat, action);
+                            break;
+                        case "SWINE":
+                            await buildSwine(meat, action);
+                            break;
+                        default:
+                            console.log(`${appLabels.processNotAvailable} ${meat}.`);
+                    }
+                }
+      
+                if (action === "GENERATE DATA SOURCE") {
+                    console.log(`Generating ${meat} data source. Please wait...`);
+                    switch(meat) {
+                        case "PORK MEATS":
+                            await generatePorkmeat(meat, action);
+                            break;
+                        case "POULTRY":
+                            await generatePoultry(meat, action);
+                            break;
+                        case "SWINE":
+                            await generateSwine(meat, action);
+                            break;
+                        default:
+                            console.log(`${appLabels.processNotAvailable} ${meat}.`);
+                    }
+                }
+
                 if (action === "CONSOLIDATE") {
                     console.log(`Consolidating ${meat} data. Please wait...`);
                     switch(meat) {
@@ -92,23 +131,7 @@ async function main() {
                         default:
                             console.log(`${appLabels.processNotAvailable} ${meat}.`);
                     }
-                }
-    
-                if (action === "GENERATE DATA SOURCE") {
-                    switch(meat) {
-                        case "PORK MEATS":
-                            await generatePorkmeat(meat, action);
-                            break;
-                        case "POULTRY":
-                            await generatePoultry(meat, action);
-                            break;
-                        case "SWINE":
-                            await generateSwine(meat, action);
-                            break;
-                        default:
-                            console.log(`${appLabels.processNotAvailable} ${meat}.`);
-                    }
-                }
+                }                
             }
         }
     } catch (err) {
