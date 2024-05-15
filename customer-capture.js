@@ -6,8 +6,8 @@ const { processes, meats } = require('./lib/options/options');
 const { loadTitle } = require('./lib/utils/utils');
 const { appLabels } = require('./lib/contants/contants');
 
-const { consolidateRobinson, consolidateMetro, 
-    consolidatePuregold } = require('./lib/processes/consolidate');
+// const { consolidateRobinson, consolidateMetro, 
+//     consolidatePuregold } = require('./lib/processes/consolidate');
 
 const { buildPorkmeat, buildPoultry, 
     buildSwine } = require('./lib/processes/buildSOTC');
@@ -116,22 +116,22 @@ async function main() {
                     }
                 }
 
-                if (action === "CONSOLIDATE") {
-                    console.log(`Consolidating ${meat} data. Please wait...`);
-                    switch(meat) {
-                        case "PORK MEATS":
-                            await consolidateRobinson(meat, action);
-                            break;                    
-                        case "POULTRY":
-                            await consolidatePuregold(meat, action);
-                            break;
-                        case "SWINE":
-                            await consolidateMetro(meat, action);
-                            break;
-                        default:
-                            console.log(`${appLabels.processNotAvailable} ${meat}.`);
-                    }
-                }                
+                // if (action === "CONSOLIDATE") {
+                //     console.log(`Consolidating ${meat} data. Please wait...`);
+                //     switch(meat) {
+                //         case "PORK MEATS":
+                //             await consolidateRobinson(meat, action);
+                //             break;
+                //         case "POULTRY":
+                //             await consolidatePuregold(meat, action);
+                //             break;
+                //         case "SWINE":
+                //             await consolidateMetro(meat, action);
+                //             break;
+                //         default:
+                //             console.log(`${appLabels.processNotAvailable} ${meat}.`);
+                //     }
+                // }                
             }
         }
     } catch (err) {
